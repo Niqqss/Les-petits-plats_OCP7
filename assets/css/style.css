@@ -1,0 +1,44 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 1.5;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+header {
+    margin-top : 2rem;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    width: 20rem;
+}
+
+
+form {
+    position: relative;
+    display: inline;
+}
+
+#site-search {
+    padding : 1.5rem;
+    width: 1240px;
+    border: none;
+    background-color: #E7E7E7;
+    border-radius: 5px;
+}
+
+.search-icon {
+    position: absolute;
+    top : -.75rem;
+    right : 1rem;
+    font-size: 32px;
+}
