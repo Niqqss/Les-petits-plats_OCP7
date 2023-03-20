@@ -29,7 +29,7 @@ form {
     display: inline;
 }
 
-#site-search {
+#recipe-search {
     padding: 1.5rem;
     width: 100%;
     border: none;
@@ -43,6 +43,37 @@ form {
     right: 1rem;
     font-size: 32px;
 }
+
+.filters-container {
+    margin-top : 2rem;
+    display: flex;
+    gap : 1rem;
+}
+
+.filter {
+    padding : 1rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #68D9A4;
+    width: 200px;
+    font-size: 18px;
+    color : white;
+}
+
+.filter:first-child {
+    background-color: #3282F7;
+}
+
+.filter:last-child {
+    background-color: #ED6454;
+}
+
+.filter i {
+    cursor: pointer;
+}
+
 
 .recipes-cards-container {
     margin-top: 3rem;

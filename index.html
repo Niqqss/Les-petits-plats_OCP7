@@ -18,11 +18,15 @@
     <main>
         <section class="searchbar-and-filters">
             <form role="search" class="searchbar" action="">
-                <input type="search" id="site-search" name="q" placeholder="Rechercher une recette">
+                <input type="search" id="recipe-search" name="q" placeholder="Rechercher une recette">
                 <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
             </form>
 
-            <div class="filters-container"></div>
+            <div class="filters-container">
+                <div class="filter"><p>Ingrédients</p><i class="fa-solid fa-chevron-down"></i></div>
+                <div class="filter"><p>Appareils</p><i class="fa-solid fa-chevron-down"></i></div>
+                <div class="filter"><p>Ustensiles</p><i class="fa-solid fa-chevron-down"></i></div>
+            </div>
 
             <article class="recipes-cards-container"></article>
         </section>
