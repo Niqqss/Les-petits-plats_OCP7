@@ -6,11 +6,11 @@
 
 body {
     line-height: 1.5;
-    max-width: 1440px;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 1440px;
     font-family: lato;
 }
 
@@ -23,10 +23,15 @@ header {
     width: 20rem;
 }
 
+.searchbar-and-filters {
+    display: flex;
+    flex-wrap: wrap;
+    margin : 0 2rem 2rem 2rem;
+}
 
 form {
     position: relative;
-    display: inline;
+    width: 100%;
 }
 
 #recipe-search {
@@ -39,7 +44,7 @@ form {
 
 .search-icon {
     position: absolute;
-    top: -.75rem;
+    top: .6rem;
     right: 1rem;
     font-size: 32px;
 }
@@ -47,6 +52,8 @@ form {
 .filters-container {
     margin-top : 2rem;
     display: flex;
+    flex-wrap: wrap;
+    width: 100%;
     gap : 1rem;
 }
 
@@ -57,9 +64,13 @@ form {
     align-items: center;
     justify-content: space-between;
     background-color: #68D9A4;
-    width: 200px;
+    width: 100%;
     font-size: 18px;
     color : white;
+}
+
+.filter p {
+    margin : 0;
 }
 
 .filter:first-child {
@@ -74,17 +85,15 @@ form {
     cursor: pointer;
 }
 
-
 .recipes-cards-container {
-    margin-top: 3rem;
     display: flex;
     gap: 50px;
     flex-wrap: wrap;
-    margin-bottom : 2rem;
+    margin : 0 2rem 2rem 2rem;
 }
 
 .recipe-card {
-    width: calc((100% / 3) - (50px * 2 / 3));
+    width: 100%;
 }
 
 .recipe-card-placeholder {
@@ -129,7 +138,7 @@ form {
 
 .recipe-how-to ul,
 .recipe-how-to p {
-    width: 50%;
+    width: 100%;
 }
 
 .recipe-how-to ul {
@@ -148,4 +157,22 @@ form {
 
 .ingredient-name {
     font-weight: 700;
+}
+
+@media screen and (min-width: 768px) {
+    .recipe-card {
+        width: calc((100% / 2) - (50px / 2));
+    }
+    .filter {
+        width: 200px;
+    }
+    .filter p {
+        margin : 1rem 0;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .recipe-card {
+        width: calc((100% / 3) - (50px * 2 / 3));
+    }
 }
