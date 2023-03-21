@@ -59,7 +59,7 @@ class RecipeCard {
   }
 }
 
-import recipes from '/assets/data/recipes.js';
+import recipes from '../data/recipes.js';
 
 const recipeContainer = document.querySelector('.recipes-cards-container');
 
