@@ -29,15 +29,10 @@ header {
     margin : 0 2rem 2rem 2rem;
 }
 
-.filters {
-    display: flex;
-    gap : 2rem;
-    width: 100%;
-}
-
 form {
     position: relative;
     width: 100%;
+    margin-bottom : 1rem;
 }
 
 #recipe-search {
@@ -57,19 +52,27 @@ form {
 }
 
 .filters-container {
-    margin-top : 2rem;
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     gap : 1rem;
 }
 
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap : 1rem;
+    width: 100%;
+}
+
+
 .filter {
     padding : 1rem;
     border-radius: 5px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap : 1rem;
     background-color: #68D9A4;
     width: 100%;
     font-size: 18px;
@@ -168,129 +171,44 @@ form {
     font-weight: 700;
 }
 
-@media screen and (min-width: 768px) {
-    .recipe-card {
-        width: calc((100% / 2) - (50px / 2));
-    }
-    .filter {
-        width: 200px;
-    }
-    .filter p {
-        margin : 1rem 0;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .recipe-card {
-        width: calc((100% / 3) - (50px * 2 / 3));
-    }
-}
-
-
 /* A RANGER + VERIF MOBILE FIRST*/
 
-/* INGREDIENTS */
+.ingredients-list-container, .appliances-list-container, .ustensils-list-container {
+    position: absolute;
+    z-index : 1;
+    width: 100%;
+    top : 2.7rem;
+    left : 0;
+    display: none;
+    padding : 0 1rem 1rem 1rem;
+    border-radius: 5px;
+}
 
 .ingredients-list-container {
-    position: absolute;
-    background-color: #3282F7;
-    z-index : 1;
-    width: 800px;
-    top : 5rem;
-    left : 0;
-    display: none;
-    padding : 0 1rem 1rem 1rem;
-    border-radius: 5px;
-}
-
-.ingredients-list {
-    padding : 0;
-    margin : 0;
-    list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 15px;
-}
-
-.ingredients-list li {
-    width: calc(100%/3);
-    cursor: pointer;
-}
-
-.ingredient-input {
     background-color: #3282F7;
 }
-
-/* APPAREILS */
 
 .appliances-list-container {
-    position: absolute;
-    background-color: #68D9A4;
-    z-index : 1;
-    width: 800px;
-    top : 5rem;
-    left : 0;
-    display: none;
-    padding : 0 1rem 1rem 1rem;
-    border-radius: 5px;
-}
-
-.appliances-list {
-    padding : 0;
-    margin : 0;
-    list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 15px;
-}
-
-.appliances-list li {
-    width: calc(100%/3);
-    cursor: pointer;
-}
-
-.appliance-input {
     background-color: #68D9A4;
 }
-
-/* USTENSILES */
 
 .ustensils-list-container {
-    position: absolute;
     background-color: #ED6454;
-    z-index : 1;
-    width: 800px;
-    top : 5rem;
-    left : 0;
-    display: none;
-    padding : 0 1rem 1rem 1rem;
-    border-radius: 5px;
 }
 
-.ustensils-list {
+.ingredients-list, .appliances-list, .ustensils-list {
     padding : 0;
     margin : 0;
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
-    font-size: 15px;
+    font-size: 13px;
 }
 
-.ustensils-list li {
+.ingredients-list li, .appliances-list li, .ustensils-list li {
     width: calc(100%/3);
     cursor: pointer;
 }
-
-.ustensil-input {
-    background-color: #ED6454;
-    outline: none;
-    border: none;
-    color : white;
-    width: 100%;
-}
-
-
-/* COMMUN */
 
 .ingredient-input, .appliance-input, .ustensil-input {
     display: none;
@@ -298,6 +216,19 @@ form {
     border: none;
     color : white;
     width: 100%;
+}
+
+.ingredient-input {
+    background-color: #3282F7;
+}
+
+.appliance-input {
+    background-color: #68D9A4;
+}
+
+
+.ustensil-input {
+    background-color: #ED6454;
 }
 
 .visible {
@@ -309,7 +240,7 @@ form {
 }
 
 .expand {
-    width: 800px;
+    width: 100%;
 }
 
 .ingredient-input::placeholder, .appliance-input::placeholder, .ustensil-input::placeholder {
@@ -329,6 +260,7 @@ form {
 
 .container-visible {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .selected-filters-container span { 
@@ -357,3 +289,47 @@ form {
     background-color: #ED6454;
 }
 
+@media screen and (min-width: 769px) {
+    .recipe-card {
+        width: calc((100% / 2) - (50px / 2));
+    }
+    .filter {
+        font-size: 18px;
+        padding : 1rem;
+    }
+    .filter p {
+        margin : 1rem 0;
+    }
+    .ingredients-list-container, .appliances-list-container, .ustensils-list-container {
+        top : 2.6rem;
+    }
+    .ingredients-list, .appliances-list, .ustensils-list {
+        font-size: 15px;
+    }
+}
+
+@media screen and (min-width: 1025px) {
+    .recipe-card {
+        width: calc((100% / 3) - (50px * 2 / 3));
+    }
+    .filter {
+        width: 200px;
+        padding : 1rem;
+    }
+    .ingredients-list-container, .ustensils-list-container, .appliances-list-container {
+        width: 500px;
+        top : 5rem;
+    }
+    .expand {
+        width: 500px;
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    .ingredients-list-container, .ustensils-list-container, .appliances-list-container {
+        width: 700px;
+    }
+    .expand {
+        width: 700px;
+    }
+}
