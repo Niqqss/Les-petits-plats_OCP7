@@ -11,7 +11,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     max-width: 1440px;
-    font-family: lato;
+    font-family: 'Lato', sans-serif;
 }
 
 header {
@@ -29,6 +29,12 @@ header {
     margin : 0 2rem 2rem 2rem;
 }
 
+.filters {
+    display: flex;
+    gap : 2rem;
+    width: 100%;
+}
+
 form {
     position: relative;
     width: 100%;
@@ -40,6 +46,7 @@ form {
     border: none;
     background-color: #E7E7E7;
     border-radius: 5px;
+    font-size: 18px;
 }
 
 .search-icon {
@@ -67,17 +74,18 @@ form {
     width: 100%;
     font-size: 18px;
     color : white;
+    position: relative;
 }
 
 .filter p {
     margin : 0;
 }
 
-.filter:first-child {
+.ingredient-filter {
     background-color: #3282F7;
 }
 
-.filter:last-child {
+.ustensil-filter {
     background-color: #ED6454;
 }
 
@@ -152,7 +160,8 @@ form {
     display: -webkit-box;
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
-    max-height: 120px;
+    max-height: 110px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .ingredient-name {
@@ -176,3 +185,175 @@ form {
         width: calc((100% / 3) - (50px * 2 / 3));
     }
 }
+
+
+/* A RANGER + VERIF MOBILE FIRST*/
+
+/* INGREDIENTS */
+
+.ingredients-list-container {
+    position: absolute;
+    background-color: #3282F7;
+    z-index : 1;
+    width: 800px;
+    top : 5rem;
+    left : 0;
+    display: none;
+    padding : 0 1rem 1rem 1rem;
+    border-radius: 5px;
+}
+
+.ingredients-list {
+    padding : 0;
+    margin : 0;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 15px;
+}
+
+.ingredients-list li {
+    width: calc(100%/3);
+    cursor: pointer;
+}
+
+.ingredient-input {
+    background-color: #3282F7;
+}
+
+/* APPAREILS */
+
+.appliances-list-container {
+    position: absolute;
+    background-color: #68D9A4;
+    z-index : 1;
+    width: 800px;
+    top : 5rem;
+    left : 0;
+    display: none;
+    padding : 0 1rem 1rem 1rem;
+    border-radius: 5px;
+}
+
+.appliances-list {
+    padding : 0;
+    margin : 0;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 15px;
+}
+
+.appliances-list li {
+    width: calc(100%/3);
+    cursor: pointer;
+}
+
+.appliance-input {
+    background-color: #68D9A4;
+}
+
+/* USTENSILES */
+
+.ustensils-list-container {
+    position: absolute;
+    background-color: #ED6454;
+    z-index : 1;
+    width: 800px;
+    top : 5rem;
+    left : 0;
+    display: none;
+    padding : 0 1rem 1rem 1rem;
+    border-radius: 5px;
+}
+
+.ustensils-list {
+    padding : 0;
+    margin : 0;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 15px;
+}
+
+.ustensils-list li {
+    width: calc(100%/3);
+    cursor: pointer;
+}
+
+.ustensil-input {
+    background-color: #ED6454;
+    outline: none;
+    border: none;
+    color : white;
+    width: 100%;
+}
+
+
+/* COMMUN */
+
+.ingredient-input, .appliance-input, .ustensil-input {
+    display: none;
+    outline: none;
+    border: none;
+    color : white;
+    width: 100%;
+}
+
+.visible {
+    display: unset;
+}
+
+.hidden {
+    display: none;
+}
+
+.expand {
+    width: 800px;
+}
+
+.ingredient-input::placeholder, .appliance-input::placeholder, .ustensil-input::placeholder {
+    color : rgba(255, 255, 255, 0.8);
+}
+
+.filter li::first-letter {
+    text-transform: capitalize;
+}
+
+/* SUITE */
+
+.selected-filters-container {
+    gap : .5rem;
+    display: none;
+}
+
+.container-visible {
+    display: flex;
+}
+
+.selected-filters-container span { 
+    padding : .7rem;
+    border-radius: 5px;
+    color : white;
+    display: flex;
+    gap : .3rem;
+    align-items: center;
+    font-size: 14px;
+}
+
+.selected-filters-container span i {
+    cursor: pointer;
+}
+
+.appliance-selected-item {
+    background-color: #68D9A4;
+}
+
+.ingredient-selected-item {
+    background-color: #3282F7;
+}
+
+.ustensil-selected-item {
+    background-color: #ED6454;
+}
+

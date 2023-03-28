@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les petits plats</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
     <script src="https://kit.fontawesome.com/cd6a5f940b.js" crossorigin="anonymous"></script>
 </head>
 
@@ -23,18 +28,30 @@
             </form>
 
             <div class="filters-container">
-                <div class="filter">
-                    <p>Ingrédients</p><i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div class="filter">
-                    <p>Appareils</p><i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div class="filter">
-                    <p>Ustensiles</p><i class="fa-solid fa-chevron-down"></i>
+                <div class="selected-filters-container"></div>
+                <div class="filters">
+                    <div class="filter ingredient-filter">
+                        <p>Ingrédients</p>
+                        <input type="text" class="ingredient-input" placeholder="Rechercher un ingrédient">
+                        <i class="fa-solid fa-chevron-down"></i>
+                        <div class="ingredients-list-container"></div>
+                    </div>
+                    <div class="filter appliance-filter">
+                        <p>Appareils</p>
+                        <input type="text" class="appliance-input" placeholder="Rechercher un appareil">
+                        <i class="fa-solid fa-chevron-down"></i>
+                        <div class="appliances-list-container"></div>
+                    </div>
+                    <div class="filter ustensil-filter">
+                        <p>Ustensiles</p>
+                        <input type="text" class="ustensil-input" placeholder="Rechercher un ustensile">
+                        <i class="fa-solid fa-chevron-down"></i>
+                        <div class="ustensils-list-container"></div>
+                    </div>
                 </div>
             </div>
         </section>
-        
+
         <article class="recipes-cards-container"></article>
     </main>
 
