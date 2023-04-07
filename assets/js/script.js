@@ -205,5 +205,3 @@ ustensilsItems.forEach((ustensilsItem) => {
     selectFilter(ustensilsItem, 'ustensil-selected-item');
   });
 });
-
-
