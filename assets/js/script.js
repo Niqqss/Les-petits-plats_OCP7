@@ -70,14 +70,6 @@ recipes.forEach(recipe => {
   recipeCard.render(recipeContainer);
 });
 
-// RECHERCHE
-
-const searchInput = document.getElementById('recipe-search');
-
-searchInput.addEventListener('keypress', function (event) {
-  event.preventDefault(); // prevent form submission
-});
-
 // FILTRES
 
 function toggleFilterIcon(filterIcon, listContainer, filterInput, filterName, filter) {
@@ -185,23 +177,105 @@ function selectFilter(item, className) {
 
   selectedFilterIcon.addEventListener('click', () => {
     selectedFiltersContainer.removeChild(selectedFilter);
+    item.classList.toggle("hidden");
+    const isNoMatchMessage = document.querySelector(".no-match-message");
+    if (isNoMatchMessage) {
+      isNoMatchMessage.remove();
+    }
   });
 }
 
-appliancesItems.forEach((appliancesItem) => {
-  appliancesItem.addEventListener('click', () => {
-    selectFilter(appliancesItem, 'appliance-selected-item');
+const noMatchMessage = document.createElement("li");
+noMatchMessage.textContent = "Aucun résultat";
+noMatchMessage.classList.add("no-match-message");
+
+function addFilterClickListener(items, selectedClass) {
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      selectFilter(item, selectedClass);
+      item.classList.toggle("hidden");
+      const parentNode = item.parentNode;
+
+      // Check if all child elements are hidden
+      const allHidden = Array.from(parentNode.children).every(child => child.classList.contains("hidden"));
+
+      const isNoMatchMessage = document.querySelector(".no-match-message");
+
+      if (allHidden) {
+        if (!isNoMatchMessage) {
+          item.parentNode.appendChild(noMatchMessage);
+        }
+      } else {
+        if (isNoMatchMessage) {
+          isNoMatchMessage.remove();
+        }
+      }
+    });
   });
+}
+
+addFilterClickListener(appliancesItems, 'appliance-selected-item');
+addFilterClickListener(ingredientsItems, 'ingredient-selected-item');
+addFilterClickListener(ustensilsItems, 'ustensil-selected-item');
+
+// ALGO
+const form = document.querySelector('form');
+const primarySearchInput = document.getElementById('recipe-search');
+const ingredientsSearch = document.querySelector(".ingredient-input");
+const ingredientsList = document.querySelector(".ingredients-list");
+const appliancesSearch = document.querySelector(".appliance-input");
+const appliancesList = document.querySelector(".appliances-list");
+const ustensilsSearch = document.querySelector(".ustensil-input");
+const ustensilsList = document.querySelector(".ustensils-list");
+
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+})
+
+primarySearchInput.addEventListener('input', () => {
+  if (primarySearchInput.value.length > 2) {
+    console.log(primarySearchInput.value)
+  }
 });
 
-ingredientsItems.forEach((ingredientsItem) => {
-  ingredientsItem.addEventListener('click', () => {
-    selectFilter(ingredientsItem, 'ingredient-selected-item');
+function lookForMatch(searchInput, itemsList, items) {
+  let matchFound = false;
+
+  items.forEach(item => {
+    if (item.textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
+      item.classList.remove("hidden");
+      matchFound = true;
+    } else {
+      item.classList.add("hidden");
+    }
   });
+
+  const isNoMatchMessage = itemsList.querySelector(".no-match-message");
+
+  if (!matchFound) {
+    if (!isNoMatchMessage) {
+      itemsList.appendChild(noMatchMessage);
+    }
+  } else {
+    if (isNoMatchMessage) {
+      isNoMatchMessage.remove();
+    }
+  }
+}
+
+ingredientsSearch.addEventListener('input', () => {
+  lookForMatch(ingredientsSearch, ingredientsList, ingredientsItems);
 });
 
-ustensilsItems.forEach((ustensilsItem) => {
-  ustensilsItem.addEventListener('click', () => {
-    selectFilter(ustensilsItem, 'ustensil-selected-item');
-  });
+appliancesSearch.addEventListener('input', () => {
+  lookForMatch(appliancesSearch, appliancesList, appliancesItems);
 });
+
+ustensilsSearch.addEventListener('input', () => {
+  lookForMatch(ustensilsSearch, ustensilsList, ustensilsItems);
+});
+
+
+
+

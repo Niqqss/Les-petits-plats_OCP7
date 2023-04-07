@@ -289,6 +289,10 @@ form {
     background-color: #ED6454;
 }
 
+.no-match-message {
+    cursor: default !important;
+}
+
 @media screen and (min-width: 769px) {
     .recipe-card {
         width: calc((100% / 2) - (50px / 2));
