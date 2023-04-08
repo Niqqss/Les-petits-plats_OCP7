@@ -239,13 +239,15 @@ primarySearchInput.addEventListener('input', () => {
   }
 });
 
-function lookForMatch(searchInput, itemsList, items) {
+function lookForMatch(searchInput, itemsList, items, selectedFilters) {
   let matchFound = false;
 
   items.forEach(item => {
     if (item.textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
       item.classList.remove("hidden");
-      matchFound = true;
+      if (!Array.from(selectedFilters).some(filter => filter.textContent === item.textContent)) {
+        matchFound = true;
+      }
     } else {
       item.classList.add("hidden");
     }
@@ -262,20 +264,28 @@ function lookForMatch(searchInput, itemsList, items) {
       isNoMatchMessage.remove();
     }
   }
+
+  items.forEach(item => {
+    selectedFilters.forEach(selectedFilter => {
+      if (selectedFilter.textContent === item.textContent) {
+        item.classList.add("hidden");
+      }
+    });
+  });
 }
 
+
 ingredientsSearch.addEventListener('input', () => {
-  lookForMatch(ingredientsSearch, ingredientsList, ingredientsItems);
+  const selectedFilters = document.querySelectorAll(".ingredient-selected-item");
+  lookForMatch(ingredientsSearch, ingredientsList, ingredientsItems, selectedFilters);
 });
 
 appliancesSearch.addEventListener('input', () => {
-  lookForMatch(appliancesSearch, appliancesList, appliancesItems);
+  const selectedFilters = document.querySelectorAll(".appliance-selected-item");
+  lookForMatch(appliancesSearch, appliancesList, appliancesItems, selectedFilters);
 });
 
 ustensilsSearch.addEventListener('input', () => {
-  lookForMatch(ustensilsSearch, ustensilsList, ustensilsItems);
+  const selectedFilters = document.querySelectorAll(".ustensil-selected-item");
+  lookForMatch(ustensilsSearch, ustensilsList, ustensilsItems, selectedFilters);
 });
-
-
-
-
