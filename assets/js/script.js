@@ -274,9 +274,6 @@ function lookForMatch(searchInput, itemsList, items, selectedFilters) {
   });
 }
 
-test
-
-
 ingredientsSearch.addEventListener('input', () => {
   const selectedFilters = document.querySelectorAll(".ingredient-selected-item");
   lookForMatch(ingredientsSearch, ingredientsList, ingredientsItems, selectedFilters);
