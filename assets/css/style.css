@@ -293,6 +293,10 @@ form {
     cursor: default !important;
 }
 
+.test {
+    background-color: red;
+}
+
 @media screen and (min-width: 769px) {
     .recipe-card {
         width: calc((100% / 2) - (50px / 2));

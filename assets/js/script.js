@@ -182,6 +182,14 @@ function selectFilter(item, className) {
     if (isNoMatchMessage) {
       isNoMatchMessage.remove();
     }
+    nonMatchingCards.forEach(nonMatchingCard => {
+      nonMatchingCard.classList.toggle("hidden");
+    })
+    nonMatchingIngredients.forEach(nonMatchingIngredient => {
+      nonMatchingIngredient.classList.toggle("hidden");
+    })
+    matchingCards = [];
+    matchingIngredients = [];
   });
 }
 
@@ -189,12 +197,54 @@ const noMatchMessage = document.createElement("li");
 noMatchMessage.textContent = "Aucun résultat";
 noMatchMessage.classList.add("no-match-message");
 
+const recipeCardsIngredients = document.querySelectorAll(".ingredient-name");
+const recipeCards = document.querySelectorAll(".recipe-card");
+
+let matchingCards = [];
+let nonMatchingCards = [];
+let matchingIngredients = [];
+let nonMatchingIngredients = [];
+
 function addFilterClickListener(items, selectedClass) {
   items.forEach(item => {
     item.addEventListener('click', () => {
       selectFilter(item, selectedClass);
       item.classList.toggle("hidden");
       const parentNode = item.parentNode;
+
+      recipeCardsIngredients.forEach(recipeCardIngredient => {
+        if (item.textContent.toLowerCase() === recipeCardIngredient.textContent.toLowerCase()) {
+          const recipeCard = recipeCardIngredient.closest(".recipe-card");
+          matchingCards.push(recipeCard)
+        }
+      });
+
+      nonMatchingCards = Array.from(recipeCards).filter(recipeCard => {
+        return !matchingCards.includes(recipeCard);
+      });
+
+      nonMatchingCards.forEach(nonMatchingCard => {
+        nonMatchingCard.classList.toggle("hidden");
+      })
+
+      matchingCards.forEach(matchingCard => {
+        const matchingCardsIngredients = matchingCard.querySelectorAll(".ingredient-name");
+        matchingCardsIngredients.forEach(matchingCardsIngredient => {
+          items.forEach(item => {
+            if (item.textContent.toLowerCase() === matchingCardsIngredient.textContent.toLowerCase()) {
+              matchingIngredients.push(item)
+            }
+          });
+        });
+      });
+
+      nonMatchingIngredients = Array.from(items).filter(item => {
+        return !matchingIngredients.includes(item)
+      })
+
+      nonMatchingIngredients.forEach(test => {
+        test.classList.toggle("hidden")
+      })
 
       // Check if all child elements are hidden
       const allHidden = Array.from(parentNode.children).every(child => child.classList.contains("hidden"));
