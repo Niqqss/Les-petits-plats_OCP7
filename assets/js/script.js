@@ -165,6 +165,11 @@ const appliancesItems = document.querySelectorAll('.appliances-item');
 const ingredientsItems = document.querySelectorAll('.ingredients-item');
 const ustensilsItems = document.querySelectorAll('.ustensils-item');
 
+let matchingCards = [];
+let nonMatchingCards = [];
+let matchingIngredients = [];
+let nonMatchingIngredients = [];
+
 function selectFilter(item, className) {
   selectedFiltersContainer.classList.add('container-visible');
   const selectedFilter = document.createElement('span');
@@ -198,12 +203,8 @@ noMatchMessage.textContent = "Aucun résultat";
 noMatchMessage.classList.add("no-match-message");
 
 const recipeCardsIngredients = document.querySelectorAll(".ingredient-name");
-const recipeCards = document.querySelectorAll(".recipe-card");
+let recipeCards = document.querySelectorAll(".recipe-card");
 
-let matchingCards = [];
-let nonMatchingCards = [];
-let matchingIngredients = [];
-let nonMatchingIngredients = [];
 
 function addFilterClickListener(items, selectedClass) {
   items.forEach(item => {
@@ -212,24 +213,40 @@ function addFilterClickListener(items, selectedClass) {
       item.classList.toggle("hidden");
       const parentNode = item.parentNode;
 
-      recipeCardsIngredients.forEach(recipeCardIngredient => {
-        if (item.textContent.toLowerCase() === recipeCardIngredient.textContent.toLowerCase()) {
-          const recipeCard = recipeCardIngredient.closest(".recipe-card");
-          matchingCards.push(recipeCard)
-        }
-      });
+      if (matchingCards.length === 0) {
+        recipeCardsIngredients.forEach(recipeCardIngredient => {
+          if (item.textContent.toLowerCase() === recipeCardIngredient.textContent.toLowerCase()) {
+            const recipeCard = recipeCardIngredient.closest(".recipe-card");
+            matchingCards.push(recipeCard);
+          }
+        });
+      } else {
+        const newMatchingCards = [];
+        matchingCards.forEach(matchingCard => {
+          const matchingCardsIngredients = matchingCard.querySelectorAll(".ingredient-name");
+          matchingCardsIngredients.forEach(matchingCardIngredient => {
+            if (item.textContent.toLowerCase() === matchingCardIngredient.textContent.toLowerCase()) {
+              const recipeCard = matchingCardIngredient.closest(".recipe-card");
+              newMatchingCards.push(recipeCard);
+            }
+          });
+        });
+        matchingCards = newMatchingCards;
+      }
 
       nonMatchingCards = Array.from(recipeCards).filter(recipeCard => {
         return !matchingCards.includes(recipeCard);
       });
 
       nonMatchingCards.forEach(nonMatchingCard => {
-        nonMatchingCard.classList.toggle("hidden");
+        nonMatchingCard.classList.add("hidden");
       })
 
+      const newMatchingIngredients = [];
       matchingCards.forEach(matchingCard => {
         const matchingCardsIngredients = matchingCard.querySelectorAll(".ingredient-name");
         matchingCardsIngredients.forEach(matchingCardsIngredient => {
+          console.log(matchingCardsIngredient)
           items.forEach(item => {
             if (item.textContent.toLowerCase() === matchingCardsIngredient.textContent.toLowerCase()) {
               matchingIngredients.push(item)
@@ -242,8 +259,8 @@ function addFilterClickListener(items, selectedClass) {
         return !matchingIngredients.includes(item)
       })
 
-      nonMatchingIngredients.forEach(test => {
-        test.classList.toggle("hidden")
+      nonMatchingIngredients.forEach(nonMatchingIngredient => {
+        nonMatchingIngredient.classList.add("hidden")
       })
 
       // Check if all child elements are hidden
