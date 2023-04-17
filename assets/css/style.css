@@ -196,16 +196,16 @@ form {
     background-color: #ED6454;
 }
 
-.ingredients-list, .appliances-list, .ustensils-list {
+.ingredient-list, .appliance-list, .ustensil-list {
     padding : 0;
     margin : 0;
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
-    font-size: 13px;
+    font-size: 15px;
 }
 
-.ingredients-list li, .appliances-list li, .ustensils-list li {
+.ingredient-list li, .appliance-list li, .ustensil-list li {
     width: calc(100%/3);
     cursor: pointer;
 }
@@ -277,15 +277,15 @@ form {
     cursor: pointer;
 }
 
-.appliance-selected-item {
+.appliance.selected-item {
     background-color: #68D9A4;
 }
 
-.ingredient-selected-item {
+.ingredient.selected-item {
     background-color: #3282F7;
 }
 
-.ustensil-selected-item {
+.ustensil.selected-item {
     background-color: #ED6454;
 }
 
