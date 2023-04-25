@@ -19,6 +19,10 @@ header {
     margin-bottom: 1rem;
 }
 
+main {
+    width: 100%;
+}
+
 .logo {
     width: 20rem;
 }
@@ -27,6 +31,7 @@ header {
     display: flex;
     flex-wrap: wrap;
     margin : 0 2rem 2rem 2rem;
+    width: 100%;
 }
 
 form {
