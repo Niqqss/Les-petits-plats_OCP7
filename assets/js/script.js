@@ -178,8 +178,7 @@ function selectFilter(tag, tagName, filterType) {
     const remainingFilters = selectedFiltersContainer.querySelectorAll(".selected-item");
     matchingCards = [];
     if (remainingFilters.length === 0) {
-      nonMatchingCards.forEach(card => card.classList.remove("hidden"));
-      nonMatchingTags.forEach(tag => tag.classList.remove("hidden"));
+      recipeCards.forEach(recipeCard => recipeCard.classList.remove("hidden"))
       matchingTags = [];
     } else {
       recipeCards.forEach(recipeCard => {
@@ -211,6 +210,10 @@ function selectFilter(tag, tagName, filterType) {
     if (noMatchMessageInList) {
       noMatchMessageInList.remove()
     }
+    previousMatchingCards = [];
+    displayedCards.forEach(displayedCard => {
+      previousMatchingCards.push(displayedCard)
+    });
   });
 }
 
@@ -266,6 +269,12 @@ sortRecipesAndTags(ustensilItems, ustensilList, "ustensil", "ustensil-filter");
 
 // SORTING FUNCTION
 
+const noMatchMessage = document.createElement("li");
+noMatchMessage.textContent = "Aucun résultat";
+noMatchMessage.classList.add("no-match-message");
+
+let previousMatchingCards = [];
+
 function sortRecipesAndTags(tags, list, tagName, filterType) {
   tags.forEach(tag => {
     tag.addEventListener("click", () => {
@@ -281,7 +290,8 @@ function sortRecipesAndTags(tags, list, tagName, filterType) {
       if (selectedFilters.length > 1) {
         matchingCards = [];
       }
-      recipeCards.forEach(recipeCard => {
+      displayedCards = document.querySelectorAll(".recipe-card:not(.hidden)");
+      displayedCards.forEach(recipeCard => {
         dataId = recipeCard.getAttribute('data-id');
         recipe = recipes.find(recipe => recipe.id == dataId);
         ingredients = recipe.ingredients;
@@ -352,15 +362,17 @@ function sortRecipesAndTags(tags, list, tagName, filterType) {
       // Check if all child elements are hidden
       const allHidden = Array.from(tags).every(child => child.classList.contains("hidden"));
       const filterList = document.querySelector(`.${filterType}`)
-      const noMatchMessage = document.createElement("li");
-      noMatchMessage.textContent = "Aucun résultat";
-      noMatchMessage.classList.add("no-match-message");
       const isNoMatchMessage = filterList.querySelector(".no-match-message");
       if (allHidden) {
         if (!isNoMatchMessage) {
           tag.parentNode.appendChild(noMatchMessage);
         }
       }
+
+      previousMatchingCards = [];
+      displayedCards.forEach(displayedCard => {
+        previousMatchingCards.push(displayedCard)
+      });
     });
   });
 }
@@ -410,9 +422,7 @@ function lookForMatch(searchInput, itemsList, items, selectedFilters) {
       item.classList.add("hidden");
     }
   });
-  const noMatchMessage = document.createElement("li");
-  noMatchMessage.textContent = "Aucun résultat";
-  noMatchMessage.classList.add("no-match-message");
+
   const isNoMatchMessage = itemsList.querySelector(".no-match-message");
   if (!matchFound) {
     if (!isNoMatchMessage) {
@@ -456,16 +466,26 @@ form.addEventListener("submit", (event) => {
 })
 
 primarySearchInput.addEventListener('keyup', () => {
-  displayedCards = document.querySelectorAll(".recipe-card:not(.hidden)");
   const remainingFilters = selectedFiltersContainer.querySelectorAll(".selected-item");
+  const keywords = primarySearchInput.value.toLowerCase().split(' ').filter(keyword => keyword.trim() !== '');
+  const noMatchElement = recipeCardsContainer.querySelector('.noRecipeMatchingMessage');
+
+  displayedCards = document.querySelectorAll(".recipe-card:not(.hidden)");
+  displayedCards.forEach(displayedCard => {
+    if (!previousMatchingCards.includes(displayedCard) === -1) {
+      previousMatchingCards.push(displayedCard)
+    }
+  });
+
+  remainingFilters.forEach(remainingFilter => {
+    keywords.push(remainingFilter.textContent.toLowerCase())
+  });
 
   if (primarySearchInput.value.length > 2) {
-    const keywords = primarySearchInput.value.toLowerCase().split(' ');
-    displayedCards.forEach(recipeCard => {
+    recipeCards.forEach(recipeCard => {
       updateMatchingCards(recipeCard, keywords, matchingCards, nonMatchingCards);
     });
 
-    const noMatchElement = recipeCardsContainer.querySelector('.noRecipeMatchingMessage');
     updateNoMatchingRecipeMessage(recipeCardsContainer, matchingCards, noMatchElement);
 
     nonMatchingCards.forEach(nonMatchingCard => {
@@ -477,7 +497,7 @@ primarySearchInput.addEventListener('keyup', () => {
 
     matchingTags = [];
     displayedCards = document.querySelectorAll(".recipe-card:not(.hidden)");
-    updateMatchingTags(displayedCards, recipes, matchingTags, allTags);
+    updateMatchingTags(displayedCards, recipes, matchingTags, allTags, remainingFilters);
 
   } else {
     if (remainingFilters.length == 0) {
@@ -493,7 +513,16 @@ primarySearchInput.addEventListener('keyup', () => {
         });
       });
     } else {
-      // lookForTags(remainingFilters)
+      previousMatchingCards.forEach(previousMatchingCard => {
+        previousMatchingCard.classList.remove("hidden");
+      });
+      if (noMatchElement) {
+        noMatchElement.remove()
+      }
+      nonMatchingCards = [];
+      matchingTags = [];
+      displayedCards = document.querySelectorAll(".recipe-card:not(.hidden)");
+      updateMatchingTags(displayedCards, recipes, matchingTags, allTags, remainingFilters);
     }
   }
 });
@@ -512,13 +541,13 @@ function updateMatchingCards(recipeCard, keywords, matchingCards, nonMatchingCar
       matchCount++;
     }
   });
-  if (matchCount === keywords.length || recipeTitle.includes(primarySearchInput.value.toLowerCase())) {
+  if (matchCount === keywords.length) {
     if (!matchingCards.includes(recipeCard)) {
       matchingCards.push(recipeCard);
-    }
-    const index = nonMatchingCards.indexOf(recipeCard);
-    if (index > -1) {
-      nonMatchingCards.splice(index, 1);
+      const index = nonMatchingCards.indexOf(recipeCard);
+      if (index > -1) {
+        nonMatchingCards.splice(index, 1);
+      }
     }
   } else if (nonMatchingCards.includes(recipeCard)) {
     const index = nonMatchingCards.indexOf(recipeCard);
@@ -541,12 +570,13 @@ function updateNoMatchingRecipeMessage(recipeCardsContainer, matchingCards, noMa
     noRecipeMatchingMessage.className = 'noRecipeMatchingMessage';
     noRecipeMatchingMessage.textContent = 'Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc';
     recipeCardsContainer.appendChild(noRecipeMatchingMessage);
+    // ingredientList.appendChild(noMatchMessage)
   } else if (noMatchElement && matchingCards.length > 0) {
     noMatchElement.remove();
   }
 }
 
-function updateMatchingTags(displayedCards, recipes, matchingTags, allTags) {
+function updateMatchingTags(displayedCards, recipes, matchingTags, allTags, remainingFilters) {
   displayedCards.forEach(displayedCard => {
     dataId = displayedCard.getAttribute('data-id')
     recipe = recipes.find(recipe => recipe.id == dataId);
@@ -566,13 +596,20 @@ function updateMatchingTags(displayedCards, recipes, matchingTags, allTags) {
       matchingTags.push(recipe.appliance)
     }
   })
+
   allTags.forEach(tagArray => {
     tagArray.forEach(tag => {
       if (!matchingTags.includes(tag.textContent)) {
-        tag.classList.add("hidden")
+        tag.classList.add("hidden");
       } else {
-        tag.classList.remove("hidden")
+        tag.classList.remove("hidden");
+        remainingFilters.forEach(remainingFilter => {
+          if (tag.textContent === remainingFilter.textContent) {
+            tag.classList.add("hidden");
+          }
+        });
       }
     });
   });
 }
+
