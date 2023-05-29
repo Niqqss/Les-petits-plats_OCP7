@@ -8,8 +8,9 @@ class RecipeCard {
     const recipeCard = document.createElement('article');
     recipeCard.className = 'recipe-card';
     recipeCard.setAttribute("data-id", `${this.recipe.id}`)
-    const cardPlaceholder = document.createElement('div');
-    cardPlaceholder.className = 'recipe-card-placeholder';
+    const cardThumbnail = document.createElement('img');
+    cardThumbnail.className = 'recipe-card-thumbnail';
+    cardThumbnail.setAttribute("src", "assets/img/recipes/" + `${this.recipe.image}`);
     const cardTextContainer = document.createElement('div');
     cardTextContainer.className = 'recipe-card-text-container';
     const infos = document.createElement('div');
@@ -42,7 +43,7 @@ class RecipeCard {
     infos.appendChild(recipeTime);
     cardTextContainer.appendChild(infos);
     cardTextContainer.appendChild(howTo);
-    recipeCard.appendChild(cardPlaceholder);
+    recipeCard.appendChild(cardThumbnail);
     recipeCard.appendChild(cardTextContainer);
     return recipeCard;
   }
