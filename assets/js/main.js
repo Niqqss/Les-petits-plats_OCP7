@@ -100,7 +100,7 @@ function selectFilter(tag, tagName) {
     ustensilSearch.value = "";
 
     appendNoMatchMessageIfEmpty();
-   
+
     previousMatchingCards = [];
     displayedCards.forEach(displayedCard => {
       previousMatchingCards.push(displayedCard)
@@ -509,6 +509,7 @@ primarySearchInput.addEventListener('input', () => {
       updateMatchingTags(displayedCards, recipes, matchingTags, allTags, remainingFilters);
     }
   }
+
   appendNoMatchMessageIfEmpty();
 
   displayedCards = document.querySelectorAll(".recipe-card:not(.hidden)");
@@ -530,39 +531,115 @@ primarySearchInput.addEventListener('input', () => {
 
 function updateMatchingCards(recipeCard, keywords, matchingCards, nonMatchingCards) {
   const recipeTitle = recipeCard.querySelector(".recipe-card-text-container h2").textContent.toLowerCase();
-  const recipeIngredients = Array.from(recipeCard.querySelectorAll('.ingredient-name')).map(element => element.textContent.toLowerCase());
+  const recipeIngredients = [];
+  const ingredientElements = recipeCard.querySelectorAll('.ingredient-name');
+  for (let i = 0; i < ingredientElements.length; i++) {
+    const element = ingredientElements[i];
+    recipeIngredients[i] = element.textContent.toLowerCase();
+  }
   const recipeDescription = recipeCard.querySelector('.recipe-description').textContent.toLowerCase();
 
   let matchCount = 0;
-  keywords.forEach(keyword => {
-    if (recipeTitle.includes(keyword)) {
-      matchCount++;
-    } else if (recipeIngredients.some(ingredient => ingredient.includes(keyword))) {
-      matchCount++;
-    } else if (recipeDescription.includes(keyword)) {
-      matchCount++;
-    }
-  });
-
-  if (matchCount === keywords.length) {
-    if (!matchingCards.includes(recipeCard)) {
-      matchingCards.push(recipeCard);
-      const index = nonMatchingCards.indexOf(recipeCard);
-      if (index > -1) {
-        nonMatchingCards.splice(index, 1);
+  function stringContains(string, keyword) {
+    for (let i = 0; i <= string.length - keyword.length; i++) {
+      let match = true;
+      for (let j = 0; j < keyword.length; j++) {
+        if (string[i + j] !== keyword[j]) {
+          match = false;
+          break;
+        }
+      }
+      if (match) {
+        return true;
       }
     }
-  } else if (nonMatchingCards.includes(recipeCard)) {
-    const index = nonMatchingCards.indexOf(recipeCard);
-    if (index > -1) {
-      nonMatchingCards.splice(index, 1);
+    return false;
+  }
+
+  for (let i = 0; i < keywords.length; i++) {
+    const keyword = keywords[i];
+
+    if (stringContains(recipeTitle, keyword)) {
+      matchCount++;
+    } else {
+      let ingredientMatch = false;
+      for (let j = 0; j < recipeIngredients.length; j++) {
+        if (stringContains(recipeIngredients[j], keyword)) {
+          ingredientMatch = true;
+          break;
+        }
+      }
+      if (ingredientMatch || stringContains(recipeDescription, keyword)) {
+        matchCount++;
+      }
+    }
+  }
+
+  var matchingCardsIndex = -1;
+  var nonMatchingCardsIndex = -1;
+
+  for (var i = 0; i < keywords.length; i++) {
+    if (keywords[i] === recipeCard) {
+      matchCount++;
+      matchingCardsIndex = i;
+    }
+  }
+
+  if (matchCount === keywords.length) {
+    var matchingCardsIncluded = false;
+    for (var j = 0; j < matchingCards.length; j++) {
+      if (matchingCards[j] === recipeCard) {
+        matchingCardsIncluded = true;
+        break;
+      }
+    }
+    if (!matchingCardsIncluded) {
+      matchingCards[matchingCards.length] = recipeCard;
+      nonMatchingCardsIndex = -1;
+      for (var k = 0; k < nonMatchingCards.length; k++) {
+        if (nonMatchingCards[k] === recipeCard) {
+          nonMatchingCardsIndex = k;
+          break;
+        }
+      }
+      if (nonMatchingCardsIndex > -1) {
+        for (var m = nonMatchingCardsIndex; m < nonMatchingCards.length - 1; m++) {
+          nonMatchingCards[m] = nonMatchingCards[m + 1];
+        }
+        nonMatchingCards.length = nonMatchingCards.length - 1;
+      }
     }
   } else {
-    if (!matchingCards.includes(recipeCard) && !nonMatchingCards.includes(recipeCard)) {
-      nonMatchingCards.push(recipeCard);
-    } else if (matchingCards.includes(recipeCard)) {
-      matchingCards.splice(matchingCards.indexOf(recipeCard), 1);
-      nonMatchingCards.push(recipeCard);
+    nonMatchingCardsIndex = -1;
+    for (var n = 0; n < nonMatchingCards.length; n++) {
+      if (nonMatchingCards[n] === recipeCard) {
+        nonMatchingCardsIndex = n;
+        break;
+      }
+    }
+    if (nonMatchingCardsIndex > -1) {
+      for (var p = nonMatchingCardsIndex; p < nonMatchingCards.length - 1; p++) {
+        nonMatchingCards[p] = nonMatchingCards[p + 1];
+      }
+      nonMatchingCards.length = nonMatchingCards.length - 1;
+    } else {
+      var matchingCardsIncluded = false;
+      for (var q = 0; q < matchingCards.length; q++) {
+        if (matchingCards[q] === recipeCard) {
+          matchingCardsIncluded = true;
+          matchingCardsIndex = q;
+          break;
+        }
+      }
+      if (!matchingCardsIncluded) {
+        nonMatchingCards[nonMatchingCards.length] = recipeCard;
+      } else {
+        for (var r = matchingCardsIndex; r < matchingCards.length - 1; r++) {
+          matchingCards[r] = matchingCards[r + 1];
+        }
+        matchingCards.length = matchingCards.length - 1;
+        nonMatchingCards[nonMatchingCards.length] = recipeCard;
+      }
     }
   }
 }
