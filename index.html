@@ -23,10 +23,10 @@
 
         <div class="cta">
             <h1>CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES</h1>
-            <form role="search" class="searchbar" action="">
+            <form role="search" class="searchbar" action="#">
                 <input type="search" id="recipe-search" name="q"
                     placeholder="Rechercher une recette, un ingrédient, ...">
-                    <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
             </form>
         </div>
     </header>
@@ -34,28 +34,41 @@
     <main>
         <section class="filters-search">
             <div class="filters-container">
-                <div class="selected-filters-container"></div>
                 <div class="filters">
                     <div class="filter ingredient-filter">
                         <p>Ingrédients</p>
-                        <input type="text" class="ingredient-input" placeholder="Rechercher un ingrédient">
                         <i class="fa-solid fa-chevron-down"></i>
-                        <div class="ingredients-list-container"></div>
+                        <div class="ingredients-list-container">
+                            <form role="search" class="filter-searchbar" action="#">
+                                <input type="search" class="ingredient-input">
+                                <span class="filter-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                            </form>
+                        </div>
                     </div>
                     <div class="filter appliance-filter">
                         <p>Appareils</p>
-                        <input type="text" class="appliance-input" placeholder="Rechercher un appareil">
                         <i class="fa-solid fa-chevron-down"></i>
-                        <div class="appliances-list-container"></div>
+                        <div class="appliances-list-container">
+                            <form role="search" class="filter-searchbar" action="#">
+                                <input type="search" class="appliance-input">
+                                <span class="filter-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                            </form>
+                        </div>
                     </div>
                     <div class="filter ustensil-filter">
                         <p>Ustensiles</p>
-                        <input type="text" class="ustensil-input" placeholder="Rechercher un ustensile">
                         <i class="fa-solid fa-chevron-down"></i>
-                        <div class="ustensils-list-container"></div>
+                        <div class="ustensils-list-container">
+                            <form role="search" class="filter-searchbar" action="#">
+                                <input type="search" class="ustensil-input">
+                                <span class="filter-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                <p class="recipes-number"><span class="recipes-counter">50</span>recettes</p>
             </div>
+            <div class="selected-filters-container"></div>
         </section>
 
         <article class="recipes-cards-container"></article>
