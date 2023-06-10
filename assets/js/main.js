@@ -30,7 +30,6 @@ allTags.push(ustensilItems)
 let recipesCounter = document.querySelector('.recipes-counter');
 
 // creates DOM when filter is selected
-
 function selectFilter(tag, tagName) {
   selectedFiltersContainer.classList.add('container-visible');
   const selectedFilter = document.createElement('span');
@@ -42,7 +41,6 @@ function selectFilter(tag, tagName) {
   selectedFiltersContainer.appendChild(selectedFilter);
 
   // behavior when filter is removed
-
   selectedFilterIcon.addEventListener('click', () => {
     selectedFiltersContainer.removeChild(selectedFilter);
     const remainingFilters = selectedFiltersContainer.querySelectorAll(".selected-item");
@@ -60,7 +58,7 @@ function selectFilter(tag, tagName) {
         matchingCards.forEach(matchingCard => {
           matchingCard.classList.remove("hidden");
         });
-        const noMatchElement = recipeCardsContainer.querySelector('.noRecipeMatchingMessage');
+        const noMatchElement = recipeCardsContainer.querySelector('.no-recipes-matching-message');
         updateNoMatchingRecipeMessage(recipeCardsContainer, matchingCards, noMatchElement)
       } else {
         recipeCards.forEach(recipeCard => recipeCard.classList.remove("hidden"))
@@ -74,7 +72,7 @@ function selectFilter(tag, tagName) {
           });
           matchingCards = filterMatchingCards(matchingCards, recipes, remainingFilters);
         } else {
-          const noMatchElement = recipeCardsContainer.querySelector('.noRecipeMatchingMessage');
+          const noMatchElement = recipeCardsContainer.querySelector('.no-recipes-matching-message');
           recipeCards.forEach(recipeCard => {
             updateMatchingCards(recipeCard, keywords, matchingCards, nonMatchingCards, remainingFilters)
           });
@@ -198,7 +196,6 @@ sortRecipesAndTags(applianceItems, applianceList, "appliance", "appliance-filter
 sortRecipesAndTags(ustensilItems, ustensilList, "ustensil", "ustensil-filter");
 
 // filter selection behavior
-
 let previousMatchingCards = [];
 
 function sortRecipesAndTags(tags, list, tagName) {
@@ -319,7 +316,6 @@ function clearSearchInputs() {
 }
 
 // filters search bar behavior
-
 const ingredientSearch = document.querySelector(".ingredient-input");
 const applianceSearch = document.querySelector(".appliance-input");
 const ustensilSearch = document.querySelector(".ustensil-input");
@@ -394,24 +390,16 @@ ustensilSearch.addEventListener('input', () => {
 });
 
 // main search bar behavior
-
 const primarySearchInput = document.getElementById('recipe-search');
 
 primarySearchInput.addEventListener('input', () => {
   const remainingFilters = selectedFiltersContainer.querySelectorAll(".selected-item");
   const keywords = primarySearchInput.value.toLowerCase().split(' ').filter(keyword => keyword.trim() !== '');
-  const noMatchElement = recipeCardsContainer.querySelector('.noRecipeMatchingMessage');
+  const noMatchElement = recipeCardsContainer.querySelector('.no-recipes-matching-message');
 
   const userInput = primarySearchInput.value;
 
   inputVerification(userInput, primarySearchInput)
-
-  displayedCards = document.querySelectorAll(".recipe-card:not(.hidden)");
-  displayedCards.forEach(displayedCard => {
-    if (!previousMatchingCards.includes(displayedCard) === -1) {
-      previousMatchingCards.push(displayedCard)
-    }
-  });
 
   if (primarySearchInput.value.length > 2) {
     if (remainingFilters.length > 0) {
@@ -519,7 +507,6 @@ primarySearchInput.addEventListener('input', () => {
   recipesCounter.textContent = displayedCards.length;
 
   // close dropdown when typing in the primary searchbar
-
   const openedList = document.querySelector(".expand");
   if (openedList) {
     const filterIcon = openedList.querySelector("i");
@@ -531,7 +518,6 @@ primarySearchInput.addEventListener('input', () => {
 });
 
 // update matching cards & tags based on the main searchbar input
-
 function updateMatchingCards(recipeCard, keywords, matchingCards, nonMatchingCards) {
   const recipeTitle = recipeCard.querySelector(".recipe-card-text-container h2").textContent.toLowerCase();
   const recipeIngredients = Array.from(recipeCard.querySelectorAll('.ingredient-name')).map(element => element.textContent.toLowerCase());
@@ -574,7 +560,7 @@ function updateMatchingCards(recipeCard, keywords, matchingCards, nonMatchingCar
 function updateNoMatchingRecipeMessage(recipeCardsContainer, matchingCards, noMatchElement) {
   if (!noMatchElement && matchingCards.length === 0) {
     const noRecipeMatchingMessage = document.createElement('p');
-    noRecipeMatchingMessage.className = 'noRecipeMatchingMessage';
+    noRecipeMatchingMessage.className = 'no-recipes-matching-message';
     noRecipeMatchingMessage.textContent = 'Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc';
     recipeCardsContainer.appendChild(noRecipeMatchingMessage);
   } else if (noMatchElement && matchingCards.length > 0) {
@@ -638,7 +624,6 @@ function updateMatchingTags(displayedCards, recipes, matchingTags, allTags, rema
 }
 
 // create error message when empty filter list
-
 function createNoMatchMessage() {
   const noMatchMessage = document.createElement("li");
   noMatchMessage.textContent = "Aucun résultat";
@@ -668,7 +653,6 @@ function appendNoMatchMessageIfEmpty() {
 }
 
 // form handling & verification
-
 const forms = document.querySelectorAll('form');
 
 forms.forEach(form => {
