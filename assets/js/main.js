@@ -100,7 +100,7 @@ function selectFilter(tag, tagName) {
     ustensilSearch.value = "";
 
     appendNoMatchMessageIfEmpty();
-   
+
     previousMatchingCards = [];
     displayedCards.forEach(displayedCard => {
       previousMatchingCards.push(displayedCard)
@@ -417,8 +417,8 @@ primarySearchInput.addEventListener('input', () => {
     if (remainingFilters.length > 0) {
       if (displayedCards.length > 0) {
         matchingCards = [];
-        previousMatchingCards.forEach(displayedCard => {
-          updateMatchingCards(displayedCard, keywords, matchingCards, nonMatchingCards, remainingFilters);
+        previousMatchingCards.forEach(previousMatchingCard => {
+          updateMatchingCards(previousMatchingCard, keywords, matchingCards, nonMatchingCards, remainingFilters);
         });
       } else {
         displayedCards = previousMatchingCards;
@@ -504,7 +504,11 @@ primarySearchInput.addEventListener('input', () => {
 
       nonMatchingCards = [];
       matchingTags = [];
+      
       displayedCards = document.querySelectorAll(".recipe-card:not(.hidden)");
+      displayedCards.forEach(displayedCard => {
+        updateMatchingCards(displayedCard, keywords, matchingCards, nonMatchingCards, remainingFilters);
+      });
 
       updateMatchingTags(displayedCards, recipes, matchingTags, allTags, remainingFilters);
     }
