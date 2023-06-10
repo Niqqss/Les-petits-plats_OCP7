@@ -403,8 +403,16 @@ h3 {
     cursor: default !important;
 }
 
+.no-match-message:hover {
+    background-color: white !important;
+}
+
 .test {
     background-color: red;
+}
+
+.no-recipes-matching-message {
+    font-family: 'Manrope', sans-serif;
 }
 
 /* MEDIA QUERIES */
