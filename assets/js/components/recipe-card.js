@@ -11,6 +11,7 @@ export default class RecipeCard {
         const cardThumbnail = document.createElement('img');
         cardThumbnail.className = 'recipe-card-thumbnail';
         cardThumbnail.setAttribute("src", "assets/img/recipes/" + `${this.recipe.image}`);
+        cardThumbnail.setAttribute("alt", "Photo de " + `${this.recipe.name}`);
         const cardTextContainer = document.createElement('div');
         cardTextContainer.className = 'recipe-card-text-container';
         const recipeName = document.createElement('h2');
