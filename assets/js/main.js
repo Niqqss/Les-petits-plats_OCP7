@@ -14,8 +14,6 @@ recipes.forEach(recipe => {
   displayCard(recipe)
 });
 
-console.log("test")
-
 const selectedFiltersContainer = document.querySelector('.selected-filters-container');
 let applianceItems = document.querySelectorAll('.appliance-item');
 let ingredientItems = document.querySelectorAll('.ingredient-item');
