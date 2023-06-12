@@ -5,9 +5,13 @@ import { toggleFilterList } from './components/filters.js';
 
 const recipeCardsContainer = document.querySelector('.recipes-cards-container');
 
-recipes.forEach(recipe => {
+function displayCard(recipe) {
   const recipeCard = new RecipeCard(recipe);
   recipeCard.render(recipeCardsContainer);
+}
+
+recipes.forEach(recipe => {
+  displayCard(recipe)
 });
 
 const selectedFiltersContainer = document.querySelector('.selected-filters-container');
